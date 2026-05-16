@@ -15,11 +15,16 @@ public class Bullet : MonoBehaviour
         }
     }
 
+    // Fungsi ini terpanggil otomatis ketika peluru menabrak sesuatu
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<Enemy>() != null)
+        // SEKARANG PELURU MENCARI SCRIPT "EnemyAI", BUKAN "Enemy" LAGI
+        if (other.GetComponent<EnemyAI>() != null)
         {
-            other.GetComponent<Enemy>().health -= damage;
+            // Mengurangi darah monster
+            other.GetComponent<EnemyAI>().health -= damage;
+
+            // Menghancurkan peluru agar tidak tembus terus
             Destroy(gameObject);
         }
     }

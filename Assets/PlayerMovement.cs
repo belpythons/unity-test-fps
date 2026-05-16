@@ -4,9 +4,10 @@ public class PlayerMovement : MonoBehaviour
 {
     public CharacterController controller;
     public float speed = 12f;
-    public float gravity = -9.81f;
+    public float gravity = -15f; // Diperbesar agar jatuhnya lebih cepat dan realistis
     public float jumpHeight = 3f;
 
+    [Header("Pengaturan Melompat")]
     public Transform groundCheck;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
@@ -16,29 +17,28 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        // Membuat bola imajiner di bawah kaki untuk mengecek apakah menyentuh layer "Grounded"
+        // Mengecek apakah kaki karakter menyentuh tanah
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         if (isGrounded && velocity.y < 0)
         {
-            velocity.y = -2f; // Menjaga karakter tetap menapak stabil di tanah
+            velocity.y = -2f;
         }
 
-        // Membaca input keyboard (W, A, S, D atau Panah)
+        // Berjalan
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
-
-        // Menggerakkan karakter berdasarkan arah hadapnya
         Vector3 move = transform.right * x + transform.forward * z;
         controller.Move(move * speed * Time.deltaTime);
 
-        // Melompat
+        // MELOMPAT (Tombol Space)
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
+            // Rumus fisika untuk melompat
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
 
-        // Menarik karakter ke bawah (Simulasi Gravitasi)
+        // Menerapkan Gravitasi
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
     }
