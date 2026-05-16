@@ -2,9 +2,13 @@ using UnityEngine;
 
 public class PlayerShoot : MonoBehaviour
 {
-    [Header("Pengaturan Peluru")]
+    // Membuat pilihan dropdown di Inspector
+    public enum FireMode { SemiAuto, Auto }
+
+    [Header("Pengaturan Senjata")]
+    public FireMode fireMode; // Mode tembakan
     public float bulletSpeed = 50f;
-    public float fireRate = 0.5f;
+    public float fireRate = 0.2f; // Dipercepat agar mode auto terasa
     public float bulletDamage = 10f;
 
     [Header("Referensi Objek")]
@@ -15,14 +19,25 @@ public class PlayerShoot : MonoBehaviour
 
     void Update()
     {
-        // Penghitung waktu jeda antar tembakan
         if (timer > 0)
         {
-            timer -= Time.deltaTime / fireRate;
+            timer -= Time.deltaTime;
         }
 
-        // Fire1 adalah tombol Klik Kiri pada mouse
-        if (Input.GetButtonDown("Fire1") && timer <= 0)
+        bool isShooting = false;
+
+        // Mengecek mode tembakan
+        if (fireMode == FireMode.SemiAuto)
+        {
+            isShooting = Input.GetButtonDown("Fire1"); // Harus diklik berkali-kali
+        }
+        else if (fireMode == FireMode.Auto)
+        {
+            isShooting = Input.GetButton("Fire1"); // Bisa ditahan
+        }
+
+        // Jika pemain menembak dan waktu jeda sudah habis
+        if (isShooting && timer <= 0)
         {
             Shoot();
         }
@@ -30,16 +45,10 @@ public class PlayerShoot : MonoBehaviour
 
     void Shoot()
     {
-        // 1. Memunculkan peluru di posisi ujung senjata
-        GameObject bullet = Instantiate(bulletPrefab, bulletSpawnTransform.position, Quaternion.identity);
-
-        // 2. Mendorong peluru ke depan
+        GameObject bullet = Instantiate(bulletPrefab, bulletSpawnTransform.position, bulletSpawnTransform.rotation);
         bullet.GetComponent<Rigidbody>().AddForce(bulletSpawnTransform.forward * bulletSpeed, ForceMode.Impulse);
-
-        // 3. Mengatur seberapa besar damage peluru tersebut
         bullet.GetComponent<Bullet>().damage = bulletDamage;
 
-        // 4. Mereset jeda tembakan
-        timer = 1;
+        timer = fireRate; // Reset timer berdasarkan fire rate
     }
 }

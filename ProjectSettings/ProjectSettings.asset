@@ -924,10 +924,10 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: 8ba4f632-182f-4878-a4c4-a648501782fe
+  cloudProjectId: d51f48e1-e8a2-4bfc-b604-225a38289457
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: FPS_clayz
+  projectName: unity-test-fps
   organizationId: zerobocilicung393
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
