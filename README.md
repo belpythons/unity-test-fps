@@ -25,10 +25,7 @@ Proyek ini tidak menyimpan file sementara (seperti folder Library) di GitHub unt
 
 Buka terminal Anda (Command Prompt / Fish / Bash) dan jalankan perintah berikut di folder tempat Anda ingin menyimpan proyek:
 
-git clone \[https://github.com/USERNAME\_ANDA/NAMA\_REPOSITORI\_ANDA.git\](https://github.com/USERNAME\_ANDA/NAMA\_REPOSITORI\_ANDA.git)  
-cd NAMA\_REPOSITORI\_ANDA
-
-*(Jangan lupa ganti URL di atas dengan tautan repositori GitHub asli Anda).*
+git clone https://github.com/belpythons/unity-test-fps.git
 
 ### **2\. Tambahkan Proyek ke Unity Hub**
 
